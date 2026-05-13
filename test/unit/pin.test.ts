@@ -332,6 +332,10 @@ state(State.STATUS, () => {
             then("`pin.status` is `Status.PINNED`", () => {
               expect(pin.status).toBe(Status.PINNED);
             });
+
+            then("pin `status` attribute is `Status.PINNED`", () => {
+              expect(pin.getAttribute(Attributes.STATUS)).toBe(Status.PINNED);
+            });
           });
         });
       });

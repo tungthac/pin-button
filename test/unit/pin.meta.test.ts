@@ -168,6 +168,10 @@ metadata(Metadata.EVENT, () => {
       then("`Event.ON_SHOW` exists", () => {
         expect(Event.ON_SHOW).toBeDefined();
       });
+
+      then("`Event.ON_PIN` exists", () => {
+        expect(Event.ON_PIN).toBeDefined();
+      });
     });
   });
 });

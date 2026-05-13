@@ -57,3 +57,7 @@ svg {
 :host([visibility="hidden"]) {
   display: none;
 }
+
+.unpinned {
+  display: inline-block;
+}

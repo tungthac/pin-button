@@ -23,8 +23,14 @@ export class Validate {
   };
 
   /**
-   * Validates a status value (minimum stub — throw logic added in subsequent commit).
+   * Validates a status value.
    * @category Validation
    */
-  public static status = (value: string) => value as Status;
+  public static status = (value: string) => {
+    const valid = Object.values(Status).includes(value as Status);
+    if (!valid) {
+      throw new Error(`Invalid status value: ${value}`);
+    }
+    return value as Status;
+  };
 }

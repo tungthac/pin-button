@@ -36,6 +36,19 @@ export const State = {
 } as const;
 
 /**
+ * Visibility value domain
+ * @category Metadata
+ * @enum
+ */
+export const Visibility = {} as const;
+
+/**
+ * Visibility value domain
+ * @category Metadata
+ */
+export type Visibility = (typeof Visibility)[keyof typeof Visibility];
+
+/**
  * HTML Attributes available to set
  * @category Metadata
  */

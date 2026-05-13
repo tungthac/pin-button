@@ -3,6 +3,7 @@ export {
   CSS,
   Attributes,
   State,
+  Visibility,
   Operation,
   Event,
   Gesture

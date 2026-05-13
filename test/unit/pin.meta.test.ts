@@ -191,6 +191,10 @@ metadata(Metadata.GESTURE, () => {
       then("Gesture is an object", () => {
         expect(typeof Gesture).toBe("object");
       });
+
+      then("`Gesture.CLICK` exists", () => {
+        expect(Gesture.CLICK).toBeDefined();
+      });
     });
   });
 });

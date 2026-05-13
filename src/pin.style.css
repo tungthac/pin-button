@@ -73,3 +73,8 @@ svg {
 .pinned {
   display: inline-block;
 }
+
+:host([status="pinned"]) .icon {
+  background-color: var(--button-pinned-background-color);
+  border-color: var(--button-pinned-border-color);
+}

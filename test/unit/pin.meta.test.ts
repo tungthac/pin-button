@@ -141,6 +141,10 @@ metadata(Metadata.OPERATION, () => {
       then("`Operation.UNPIN` exists", () => {
         expect(Operation.UNPIN).toBeDefined();
       });
+
+      then("`Operation.TOGGLE` exists", () => {
+        expect(Operation.TOGGLE).toBeDefined();
+      });
     });
   });
 });

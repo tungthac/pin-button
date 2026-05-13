@@ -192,6 +192,21 @@ state(State.VISIBILITY, () => {
         then("`pin.visibility` setter exists", () => {
           expect(hasSetter(pin, "visibility")).toBeTrue();
         });
+
+        and("`pin.visibility` setter exists", () => {
+          when("`pin.visibility` is set to `Visibility.HIDDEN`", () => {
+            beforeEach(() => {
+              pin.visibility = Visibility.HIDDEN;
+            });
+            afterEach(() => {
+              pin.visibility = Visibility.VISIBLE;
+            });
+
+            then("`pin.visibility` is `Visibility.HIDDEN`", () => {
+              expect(pin.visibility).toBe(Visibility.HIDDEN);
+            });
+          });
+        });
       });
     });
   });

@@ -27,6 +27,10 @@ metadata(Metadata.ATTRIBUTES, () => {
       then("Attributes is an object", () => {
         expect(typeof Attributes).toBe("object");
       });
+
+      then("`Attributes.VISIBILITY` exists", () => {
+        expect(Attributes.VISIBILITY).toBeDefined();
+      });
     });
   });
 });
@@ -41,6 +45,10 @@ metadata(Metadata.STATE, () => {
     when("State is defined", () => {
       then("State is an object", () => {
         expect(typeof State).toBe("object");
+      });
+
+      then("`State.VISIBILITY` exists", () => {
+        expect(State.VISIBILITY).toBeDefined();
       });
     });
   });

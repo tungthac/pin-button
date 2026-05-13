@@ -2,6 +2,7 @@ import {
   Tag,
   Attributes,
   State,
+  Visibility,
   Operation,
   Event,
   Gesture
@@ -49,6 +50,21 @@ metadata(Metadata.STATE, () => {
 
       then("`State.VISIBILITY` exists", () => {
         expect(State.VISIBILITY).toBeDefined();
+      });
+    });
+  });
+});
+
+// Visibility
+metadata(State.VISIBILITY, () => {
+  and("Visibility imported", () => {
+    then("Visibility is defined", () => {
+      expect(Visibility).toBeDefined();
+    });
+
+    and("Visibility is defined", () => {
+      then("Visibility is an object", () => {
+        expect(typeof Visibility).toBe("object");
       });
     });
   });

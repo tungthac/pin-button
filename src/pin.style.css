@@ -86,3 +86,9 @@ svg {
 :host([status="pinned"]) .unpinned {
   display: none;
 }
+
+@media (hover: hover) {
+  .icon:hover svg {
+    fill: var(--svg-hover-fill-color);
+  }
+}

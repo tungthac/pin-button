@@ -182,6 +182,12 @@ state(State.VISIBILITY, () => {
         then("`pin.visibility` getter exists", () => {
           expect(pin.visibility).toBeDefined();
         });
+
+        when("`pin.visibility` getter exists", () => {
+          then("`pin.visibility` is `Visibility.VISIBLE`", () => {
+            expect(pin.visibility).toBe(Visibility.VISIBLE);
+          });
+        });
       });
     });
   });

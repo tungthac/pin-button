@@ -1,107 +1,154 @@
 ![License: CC BY-NC-SA 4.0](https://flat.badgen.net/static/license/CC-BY-NC-SA-4.0/green)
 
-# Component Template
+# Pin Button
 
-This is a template for creating a new component. It includes a basic structure for the component, as well as a set of scripts for building, testing, and documenting the component.
+A reusable **Pin Button** web component built on `@scalable.software/component`. Toggles between pinned and unpinned states, supports show/hide, hover responsiveness, and automatic light/dark theme.
 
-## Getting Started
+This implementation is the answer to **Vibe Coding Challenge #2** — built strictly according to the `scalable-software/component.template` framework and its implementation policies (TDD, FAIL/PASS commit pairs, fixed policy ordering).
 
-To create a new component, you can use this template as a starting point. To do so, click the "Use this template" button at the top of the repository page. This will create a new repository with the same structure as this one.
+## Stack
 
-Once you have created a new repository, you can clone it to your local machine and start working on your component.
+- Vanilla **Web Component** (Custom Element + closed Shadow DOM, native ES Modules, import maps)
+- TypeScript 5.x
+- **Karma + Jasmine** running in ChromeHeadless
+- BDD test vocabulary (`given/and/when/then`) with typed wrappers (`composition/state/operation/events/gesture/metadata/validation`)
+- TypeDoc for API documentation
 
-```bash
-git clone
+## Folder structure
+
+```
+pin-button/
+├── specifications/
+│   ├── pin.specifications.json       ← authoritative contract (the single source of truth)
+│   └── component.specification.schema.json
+├── src/
+│   ├── pin.ts                        ← Pin component class extending base Component
+│   ├── pin.meta.ts                   ← vocabulary: Tag, Attributes, State, Visibility, Status, Operation, Event, Gesture
+│   ├── pin.validation.ts             ← Validate class — runtime domain enforcement
+│   ├── pin.template.html             ← realized composition (template + div.icon + two SVGs)
+│   ├── pin.style.css                 ← base + state-driven + hover + dark theme styles
+│   └── index.ts                      ← barrel export
+├── test/
+│   ├── helper/
+│   │   ├── helper.js                 ← BDD vocabulary, typed describe wrappers, DOM helpers
+│   │   └── helper.d.ts
+│   └── unit/
+│       ├── pin.meta.test.ts          ← vocabulary tests
+│       ├── pin.validation.test.ts    ← validator tests
+│       └── pin.test.ts               ← component behavioral tests
+├── demo/
+│   ├── index.html                    ← interactive playground (npm run serve)
+│   ├── index.js
+│   └── html.style.css
+├── importmap/
+│   ├── importmap.test.js             ← test runtime mapping
+│   ├── importmap.build.js            ← demo runtime mapping
+│   └── inject.js
+├── tasks/                            ← build / clean scripts
+├── docs/                             ← TypeDoc-generated API documentation
+└── .claude/
+    ├── CLAUDE.md
+    └── context/                      ← 10 implementation policies (composition, state, operation, event, gesture, validation, data, testing, workflow)
 ```
 
-## Install Dependencies
-
-1. Before creating a new component, first install the dependencies:
+## How to run
 
 ```bash
-npm install
+npm install                  # one-time install
+npm test                     # run Karma + Jasmine (ChromeHeadless), 115 tests
+npm run build                # compile to dist/
+npm run serve                # serve demo/ at http://localhost:8000/demo/index.html
+npm run document             # regenerate TypeDoc API docs into docs/
 ```
 
-2. Then run the `test` to ensure everything is in working order:
+## Public API
+
+```ts
+import { Pin, Visibility, Status } from "@tungthac/pin-button";
+
+await Pin.Template.load("pin.template.html");
+customElements.define(Pin.Tag, Pin);
+```
+
+### States (observable as DOM attributes)
+
+| State        | Type         | Values                  | Default      | Attribute     |
+|--------------|--------------|-------------------------|--------------|---------------|
+| `visibility` | `Visibility` | `"visible"`, `"hidden"` | `"visible"`  | optional      |
+| `status`     | `Status`     | `"pinned"`, `"unpinned"`| `"unpinned"` | compulsory    |
+
+### Operations (imperative API)
+
+```ts
+pin.hide();    // visibility → "hidden"
+pin.show();    // visibility → "visible"
+pin.pin();     // status → "pinned"
+pin.unpin();   // status → "unpinned"
+pin.toggle();  // flips status between "pinned" and "unpinned"
+```
+
+### Events (subscription-property based, single-slot)
+
+```ts
+pin.onhide  = (e) => console.log(e.detail.visibility); // "hidden"
+pin.onshow  = (e) => console.log(e.detail.visibility); // "visible"
+pin.onpin   = (e) => console.log(e.detail.status);     // "pinned"
+pin.onunpin = (e) => console.log(e.detail.status);     // "unpinned"
+
+pin.onpin = null; // unsubscribe
+```
+
+Events fire **only after accepted state transitions** (no-op assignments and rejected transitions do not emit).
+
+### Gestures
+
+- **`click`** (behavioral) — user clicks the inner `.icon` div → routes through `pin.toggle()`.
+- **`hover`** (visual) — pure CSS feedback on `.icon` hover (background, border, shadow, fill). No event fires.
+
+### Theming
+
+The component reflects two CSS custom-property scopes from `pin.style.css`:
+
+- `:host { ... }` — light-theme defaults.
+- `@media (prefers-color-scheme: dark) :host { ... }` — dark-theme overrides.
+
+No JS, no reload. The component restyles instantly when the OS theme changes.
+
+## How the project is built
+
+Every behavioural change in this repository was committed as a **FAIL/PASS pair** (test red → test green), strictly following the order defined in `.claude/context/workflow.md`:
+
+```
+COMPOSITION → STATE → VALIDATION → OPERATION → EVENT → STYLE → GESTURE → DOCUMENTATION → FEATURE
+```
+
+The git history is the implementation audit trail. To browse:
 
 ```bash
-npm test
+git log --oneline
+git log --grep="FEATURE:"   # 4 features: Visibility Control, Pin and Unpin, Hover Responsiveness, Theme Compatibility
+git log --grep="-> FAIL"    # 66 FAIL commits (every one paired with a PASS)
+git log --grep="-> PASS"    # 66 PASS commits
 ```
 
-> note: a coverage and test report will be generated in the `coverage` directory and `report` directory, respectively.
+## Policy references
 
-3. Finally, run the `document` script to generate the component API documentation:
+This component is governed by 10 policies in `.claude/context/`:
 
-```bash
-npm run document
-```
+| Policy file       | Governs                                                  |
+|-------------------|----------------------------------------------------------|
+| `composition.md`  | Structural parts, cached element references              |
+| `state.md`        | Runtime state, attribute synchronisation, mutation order |
+| `data.md`         | Component-owned content (not used by Pin)                |
+| `operation.md`    | Public imperative actions                                |
+| `event.md`        | Observable semantic outcomes                             |
+| `gesture.md`      | User interaction inputs                                  |
+| `validation.md`   | Runtime input enforcement                                |
+| `testing.md`      | Test file structure, BDD vocabulary, coverage contracts  |
+| `workflow.md`     | Branching, commit prefix vocabulary, FAIL/PASS discipline|
 
-> note: The API documentation will be generated in the `docs` directory. You can review this by opening the `index.html` file in the `docs` directory in a web browser.
-
-## Creating a New Component
-
-To create a new component, you should first update the package metadata:
-
-## Update Package Metadata
-
-Update the package name across all relevant files in this project:
-
-1. Specifications: update name and add package metadata in the `component.specifications.json` file in the `specifications` directory.
-
-2. Package: `package.json` in the `root` directory.
-
-3. Typescript Config: both `tsconfig.json` files are in the `root` directory.
-
-4. ES Module: `importmap.js` files in the `importmap` directory.
-
-5. Component: update the file names in `src` folder and class name.
-
-6. Unit Testing: The `wallaby.js` and `karma.conf.js` files are in the `root` directory, the file names and the package name used in unit tests: `test/unit`
-
-7. Demo: The `index.js` file in the `demo` directory.
-
-8. Confirm that the component name has been updated in all relevant files by running the `test` script:
-
-```bash
-npm test
-```
-
-## Creating a New Component
-
-To create a new component:
-
-1. Review the directory and file structure of the fake `component` implementation.
-2. Study this software architecture implementation policies (available from repository owner).
-3. Define the component specifications using the `component.specifications.json` template file provided.
-4. Stickly follow a TDD development approach in feature branches.
-5. After complete implementation of a feature, `test`, `build`, and generate the `documentation` (see below)
-6. Update the demo scaffold in the `demo` directory to reflect the new component's API and functionality.
-7. Lastly do a pull request to the `main` branch and merge it if everything checks out.
-
-### Testing the Component
-
-To test the component, you can use the `test` script. This script will run the component's test suite and generate both a test and coverage report.
-
-```bash
-npm test
-```
-
-### Document the Component API
-
-To document the component API, you can use the `docs` script. This script will generate a set of documentation files for the component.
-
-```bash
-npm run document
-```
+Read `pin.specifications.json` for the authoritative contract.
 
 ## License
 
-> This software and its documentation are released under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License (CC BY-NC-SA 4.0). This means you are free to share, copy, distribute, and transmit the work, and to adapt it, but only under the following conditions:
->
-> Attribution: You must attribute the work in the manner specified by the author or licensor (but not in any way that suggests that they endorse you or your use of the work).
->
-> NonCommercial: You may not use this material for commercial purposes.
->
-> ShareAlike: If you alter, transform, or build upon this work, you may distribute the resulting work only under the same or similar license to this one.
->
-> For more details, please visit the full [license agreement](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+CC BY-NC-SA 4.0 — same as the original `component.template`.

@@ -876,6 +876,53 @@ events(Event.ON_UNPIN, () => {
         then("`pin.onunpin` setter exists", () => {
           expect(hasSetter(pin, Event.ON_UNPIN)).toBeTrue();
         });
+
+        and("`pin.onunpin` setter exists", () => {
+          and("`pin.status` is `Status.PINNED`", () => {
+            beforeEach(() => {
+              pin.status = Status.PINNED;
+            });
+            afterEach(() => {
+              pin.status = Status.UNPINNED;
+            });
+
+            and("`pin.onunpin` is set to a listener", () => {
+              let onunpin: jasmine.Spy;
+              beforeEach(() => {
+                onunpin = jasmine.createSpy("onunpin");
+                pin.onunpin = onunpin;
+              });
+              afterEach(() => {
+                pin.onunpin = null;
+              });
+
+              and("`pin.onunpin` is set to a new listener", () => {
+                let onunpin2: jasmine.Spy;
+                beforeEach(() => {
+                  onunpin2 = jasmine.createSpy("onunpin2");
+                  pin.onunpin = onunpin2;
+                });
+                afterEach(() => {
+                  pin.onunpin = null;
+                });
+
+                when("`pin.status` is set to `Status.UNPINNED`", () => {
+                  beforeEach(() => {
+                    pin.status = Status.UNPINNED;
+                  });
+
+                  then("old `pin.onunpin` is not called", () => {
+                    expect(onunpin).not.toHaveBeenCalled();
+                  });
+
+                  then("new `pin.onunpin` is called", () => {
+                    expect(onunpin2).toHaveBeenCalled();
+                  });
+                });
+              });
+            });
+          });
+        });
       });
     });
   });

@@ -92,3 +92,11 @@ svg {
     fill: var(--svg-hover-fill-color);
   }
 }
+
+@media (hover: hover) {
+  :host([status="unpinned"]) .icon:hover {
+    background-color: var(--button-unpinned-hover-background-color);
+    border-color: var(--button-hover-border-color);
+    box-shadow: var(--button-hover-shadow);
+  }
+}

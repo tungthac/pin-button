@@ -6,6 +6,12 @@ A reusable **Pin Button** web component built on `@scalable.software/component`.
 
 This implementation is the answer to **Vibe Coding Challenge #2** — built strictly according to the `scalable-software/component.template` framework and its implementation policies (TDD, FAIL/PASS commit pairs, fixed policy ordering).
 
+## Live demo
+
+**[https://pin-button.vercel.app](https://pin-button.vercel.app)**
+
+The link above is the deployed playground. Click the pin icon to toggle the status, use the side panel to test programmatic show/hide, watch the event log, and switch your OS theme to see automatic dark mode.
+
 ## Stack
 
 - Vanilla **Web Component** (Custom Element + closed Shadow DOM, native ES Modules, import maps)

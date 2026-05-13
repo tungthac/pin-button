@@ -18,3 +18,4 @@ PROGRESS.md
 # Vercel deploy artifacts
 public/
 .vercel/
+.vercel

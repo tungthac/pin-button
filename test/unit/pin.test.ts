@@ -308,6 +308,10 @@ operation(Operation.HIDE, () => {
             });
           });
         });
+
+        then("`pin.show` method exists", () => {
+          expect(pin.show).toBeDefined();
+        });
       });
     });
   });

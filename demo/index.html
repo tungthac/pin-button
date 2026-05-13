@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>Pin Button</title>
+    <title>Pin Button — Demo</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="html.style.css" />
 
@@ -10,7 +10,49 @@
   </head>
 
   <body>
+    <main class="page">
+      <header class="header">
+        <h1>Pin Button — Web Component</h1>
+        <p>
+          Vanilla Custom Element built on <code>@scalable.software/component</code>.
+          Toggle your OS theme to see automatic dark mode.
+        </p>
+      </header>
+
+      <div class="grid">
+        <section class="panel">
+          <h2>Click to toggle</h2>
+          <p>Native gesture wiring inside the component. The click handler
+            routes through <code>pin.toggle()</code>.</p>
+          <div class="demo">
+            <pin-button id="primary"></pin-button>
+          </div>
+          <div class="controls">
+            <button type="button" id="force-pin">Force pin</button>
+            <button type="button" id="force-unpin">Force unpin</button>
+          </div>
+          <div class="statusRow">
+            <span>status: <strong id="status">unpinned</strong></span>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Visibility</h2>
+          <p>The component supports being shown / hidden programmatically.
+            Hidden = removed from layout (no gap).</p>
+          <div class="demo">
+            <pin-button id="visible-target"></pin-button>
+          </div>
+          <div class="controls">
+            <button type="button" id="hide">Hide</button>
+            <button type="button" id="show">Show</button>
+          </div>
+        </section>
+      </div>
+
+      <section class="log" id="log"></section>
+    </main>
+
     <script src="index.js" type="module"></script>
-    <pin-button></pin-button>
   </body>
 </html>

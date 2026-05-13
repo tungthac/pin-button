@@ -108,3 +108,27 @@ svg {
     box-shadow: var(--button-hover-shadow);
   }
 }
+
+@media (prefers-color-scheme: dark) {
+  :host {
+    --button-background-color: #1e1e1e;
+    --button-border-color: #3c3c3c;
+    --button-shadow:
+      0 1px 3px rgba(255, 255, 255, 0.12),
+      0 3px 8px rgba(0, 0, 0, 0.6);
+
+    --button-pinned-background-color: #333333;
+    --button-pinned-border-color: #555555;
+
+    --button-hover-border-color: #cfcfcf;
+    --button-hover-shadow:
+      0 2px 6px rgba(255, 255, 255, 0.16),
+      0 6px 12px rgba(0, 0, 0, 0.6);
+
+    --button-unpinned-hover-background-color: #2a2a2a;
+    --button-pinned-hover-background-color: #3d3d3d;
+
+    --svg-fill-color: #cfcfcf;
+    --svg-hover-fill-color: #ffffff;
+  }
+}

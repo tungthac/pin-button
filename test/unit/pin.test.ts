@@ -100,6 +100,18 @@ composition(Composition.TEMPLATE, () => {
           const div = pin.root.querySelector("div.icon");
           expect(div).not.toBeNull();
         });
+
+        when("`pin.root` contains `div.icon`", () => {
+          let div: HTMLDivElement;
+          beforeEach(() => {
+            div = pin.root.querySelector("div.icon") as HTMLDivElement;
+          });
+
+          then("`div.icon` contains `svg.unpinned`", () => {
+            const svg = div.querySelector("svg.unpinned");
+            expect(svg).not.toBeNull();
+          });
+        });
       });
     });
   });

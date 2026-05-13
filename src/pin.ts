@@ -75,9 +75,8 @@ export class Pin extends Component {
    * Sets the visibility state.
    * @category State
    */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public set visibility(visibility: Visibility) {
-    // mutation logic added in subsequent STATE commit
+    this._visibility = visibility;
   }
 
   /**

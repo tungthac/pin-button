@@ -41,7 +41,8 @@ export const State = {
  * @enum
  */
 export const Visibility = {
-  VISIBLE: "visible"
+  VISIBLE: "visible",
+  HIDDEN: "hidden"
 } as const;
 
 /**

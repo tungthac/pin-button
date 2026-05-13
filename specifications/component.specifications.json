@@ -1,0 +1,11 @@
+{
+  "Component": "<Component>",
+  "Package": "<component>",
+  "Description": "<Component> is a <description>",
+  "Tag": "<component-tag>",
+  "Composition": {},
+  "States": {},
+  "Operations": {},
+  "Events": {},
+  "Gestures": {}
+}

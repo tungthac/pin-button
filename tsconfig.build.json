@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "module": "es2022",
+    "target": "es2022",
+    "moduleResolution": "bundler",
+    "declaration": true,
+    "rootDir": "./src",
+    "outDir": "./dist/",
+    "paths": {
+      "@scalable.software/component.template": ["./src/index.js"]
+    }
+  },
+  "include": ["./src/**/*"]
+}

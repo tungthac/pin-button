@@ -1,0 +1,34 @@
+/* Default Styles (Light Mode) */
+html {
+  height: 100%;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background-color: inherit;
+  color: inherit;
+}
+
+/* Root Variables */
+:root {
+  --background-color: #ffffff;
+  --text-color: #000000;
+}
+
+/* Dark Mode Styles */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: #1e1e1e;
+    --text-color: #f0f0f0;
+  }
+}
+
+pin-component {
+  position: absolute;
+  left: 48px;
+  top: 48px;
+}

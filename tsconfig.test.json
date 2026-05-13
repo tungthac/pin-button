@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "module": "es2022",
+    "target": "es2022",
+    "moduleResolution": "bundler",
+    "sourceMap": true,
+    "inlineSources": true,
+    "paths": {
+      "@scalable.software/component.template": ["./src/index.js"]
+    },
+    "types": ["jasmine"],
+    "declaration": false
+  },
+  "include": [
+    "./src/**/*",
+    "./test/unit/**/*",
+    "./test/helper/helper.d.ts",
+    "./test/helper/helper.js"
+  ],
+  "exclude": ["node_modules", "dist", "tasks"],
+  "typedocOptions": {
+    "entryPoints": ["./src/index.ts"],
+    "excludePrivate": true,
+    "excludeProtected": true,
+    "disableSources": true,
+    "categorizeByGroup": false,
+    "categoryOrder": [
+      "Configuration",
+      "Utility",
+      "Data",
+      "State",
+      "Operations",
+      "Events"
+    ],
+    "sort": ["static-first", "visibility"],
+    "name": "component.template",
+    "plugin": ["typedoc-plugin-merge-modules"],
+    "mergeModulesMergeMode": "module",
+    "hideGenerator": true
+  }
+}

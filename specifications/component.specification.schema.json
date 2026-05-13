@@ -1,0 +1,490 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scalable.software/schema/component.specification.schema.json",
+  "title": "Component Specification",
+  "description": "Schema for <component>.specifications.json — the canonical source of truth from which a web component implementation, its tests, and its commit history are derived. See .claude/context/*.md for the implementation policies that consume this specification.",
+  "type": "object",
+  "required": ["Component", "Package", "Description", "Tag", "Composition"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Optional reference to this schema for IDE-driven validation."
+    },
+    "Component": {
+      "type": "string",
+      "pattern": "^[A-Z][a-zA-Z0-9]*$",
+      "description": "PascalCase class name of the component. This name is realized as the exported component class in <component>.ts.",
+      "examples": ["Pin", "Title", "Library"]
+    },
+    "Package": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9.-]*$",
+      "description": "Package identifier (lowercase, may contain hyphens or dots). Used to locate the component within its package family.",
+      "examples": ["pin", "title", "library-item"]
+    },
+    "Description": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human-readable description of the component's purpose and behavior."
+    },
+    "Tag": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)+$",
+      "description": "Custom-element tag name. Must contain at least one hyphen per the HTML custom-element specification. This tag is realized as the root template id, the metadata `Tag` constant, the configuration template id, and the `<template>` element's id attribute.",
+      "examples": ["pin-button", "app-title"]
+    },
+    "Composition": { "$ref": "#/$defs/Composition" },
+    "States": { "$ref": "#/$defs/States" },
+    "Data": { "$ref": "#/$defs/Data" },
+    "Operations": { "$ref": "#/$defs/Operations" },
+    "Events": { "$ref": "#/$defs/Events" },
+    "Gestures": { "$ref": "#/$defs/Gestures" }
+  },
+
+  "$defs": {
+    "Composition": {
+      "type": "object",
+      "title": "Composition",
+      "description": "Structural parts that make up the component and their containment relationships. Each property name is a canonical composition part name in CSS-selector notation: `{type}.{class}` when a class distinguishes the part, or `{type}` when the type alone is sufficient. Governed by .claude/context/composition.md.",
+      "minProperties": 1,
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[a-z][a-zA-Z0-9-]*(\\.[a-zA-Z][a-zA-Z0-9-]*)?$",
+        "description": "Composition part name in CSS-selector notation, for example: template, link, div.icon, svg.pinned."
+      },
+      "additionalProperties": { "$ref": "#/$defs/CompositionPart" }
+    },
+
+    "CompositionPart": {
+      "type": "object",
+      "title": "Composition Part",
+      "description": "A single structural part of the component.",
+      "required": ["description", "type"],
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable description of the structural part's role."
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Structural or element kind used to realize this part. Examples: template, div, span, input, button, svg, link.",
+          "examples": [
+            "template",
+            "div",
+            "svg",
+            "link",
+            "button",
+            "span",
+            "input"
+          ]
+        },
+        "contains": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 },
+          "description": "Ordered list of direct child composition parts contained by this structural part. Omitted for leaf parts."
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Structural identity used when the realized template part is identified by id. The root template part typically uses this and the value must equal `Tag`."
+        },
+        "class": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Structural identity used when the realized template part is identified by class. The class component of the part name (after the dot) is realized here."
+        },
+        "cached": {
+          "type": "boolean",
+          "description": "When true, the implementation must create a cached element reference for this part on the component instance. Declare cached: true on every part that runtime logic reads from, writes to, or attaches listeners to.",
+          "default": false
+        },
+        "attributes": {
+          "type": "object",
+          "description": "Template-time attributes for the realized element (e.g., link[rel,href], svg[viewBox,width,height]). Values are inserted into the template as static markup.",
+          "additionalProperties": { "type": "string" }
+        }
+      }
+    },
+
+    "States": {
+      "type": "object",
+      "title": "States",
+      "description": "Set of component-owned runtime conditions. Governed by .claude/context/state.md.",
+      "minProperties": 1,
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[a-z][a-zA-Z0-9]*$",
+        "description": "Canonical state name in lowerCamelCase."
+      },
+      "additionalProperties": { "$ref": "#/$defs/StateDefinition" }
+    },
+
+    "StateDefinition": {
+      "type": "object",
+      "title": "State Definition",
+      "required": ["type", "description", "values", "default", "readonly"],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "pattern": "^[A-Z][a-zA-Z0-9]*$",
+          "description": "PascalCase type name for the state value domain. Realized as a TypeScript type and value-domain constant in <component>.meta.ts.",
+          "examples": ["Visibility", "Status", "Mode"]
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable description of the state."
+        },
+        "values": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Allowed values or symbolic domain markers. For enum domains list each accepted value. For open domains use a symbolic marker such as '<uuid>' or '<timestamp>'.",
+          "examples": [
+            ["visible", "hidden"],
+            [null, "<timestamp>"]
+          ]
+        },
+        "default": {
+          "description": "Default runtime value of the state. Must be one of the declared values or null when the runtime contract permits an unloaded state."
+        },
+        "readonly": {
+          "type": "boolean",
+          "description": "Whether the state is externally writable. If true, the state is externally readable but internally owned; external mutation is not authoritative."
+        },
+        "attribute": {
+          "type": "object",
+          "description": "Attribute-specific configuration. Presence of this object means the state is DOM-attribute-backed. Absence means the state is non-attribute state.",
+          "required": ["optional"],
+          "additionalProperties": false,
+          "properties": {
+            "optional": {
+              "type": "boolean",
+              "description": "Whether the DOM attribute may be absent. If true, attribute absence represents the default (the setter removes the attribute when assigning the default). If false, the attribute is compulsory and must always be present in the DOM."
+            }
+          }
+        }
+      }
+    },
+
+    "Data": {
+      "type": "object",
+      "title": "Data",
+      "description": "Structured or scalar content owned by the component. Governed by .claude/context/data.md.",
+      "minProperties": 1,
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[a-z][a-zA-Z0-9]*$",
+        "description": "Canonical data name in lowerCamelCase."
+      },
+      "additionalProperties": { "$ref": "#/$defs/DataDefinition" }
+    },
+
+    "DataDefinition": {
+      "type": "object",
+      "title": "Data Definition",
+      "required": ["type", "description"],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Declared runtime shape category for the data. Examples: object, array, string, Metadata.",
+          "examples": ["object", "Metadata", "string", "array"]
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "properties": {
+          "type": "object",
+          "description": "Structured field definitions for object-shaped data.",
+          "minProperties": 1,
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z][a-zA-Z0-9]*$"
+          },
+          "additionalProperties": { "$ref": "#/$defs/DataFieldDefinition" }
+        },
+        "default": {
+          "description": "Default runtime value for the declared data item, including null when the runtime contract permits an unloaded state."
+        },
+        "readonly": {
+          "type": "boolean",
+          "description": "Whether the data item is externally writable. If true, the data is externally readable but internally owned."
+        }
+      }
+    },
+
+    "DataFieldDefinition": {
+      "type": "object",
+      "title": "Data Field Definition",
+      "required": ["type", "description"],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Declared field type. Examples: string, uuid, MapType."
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "default": {
+          "description": "Default value for the field when applicable."
+        },
+        "values": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Allowed values when the field has a constrained domain."
+        },
+        "readonly": {
+          "type": "boolean",
+          "description": "Whether the field is externally writable. Field-level readonly is optional and may be interpreted by component-specific policy."
+        }
+      }
+    },
+
+    "Operations": {
+      "type": "object",
+      "title": "Operations",
+      "description": "Public imperative actions exposed by the component. Governed by .claude/context/operation.md.",
+      "minProperties": 1,
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[a-z][a-zA-Z0-9]*$",
+        "description": "Canonical operation name in lowerCamelCase."
+      },
+      "additionalProperties": { "$ref": "#/$defs/OperationDefinition" }
+    },
+
+    "OperationDefinition": {
+      "type": "object",
+      "title": "Operation Definition",
+      "required": ["description", "parameters", "returns"],
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable description of the public action performed by the operation."
+        },
+        "parameters": {
+          "type": "array",
+          "description": "Ordered list of public invocation parameters. Use an empty array when the operation takes no arguments.",
+          "items": { "$ref": "#/$defs/OperationParameter" }
+        },
+        "returns": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Declared return contract. Use 'void' for action-oriented operations that do not return a value.",
+          "examples": ["void", "Metadata", "string"]
+        }
+      }
+    },
+
+    "OperationParameter": {
+      "type": "object",
+      "title": "Operation Parameter",
+      "required": ["name", "type", "description"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-zA-Z0-9]*$",
+          "description": "Canonical parameter name in lowerCamelCase."
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Declared parameter type. Examples: Metadata, string, boolean."
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+
+    "Events": {
+      "type": "object",
+      "title": "Events",
+      "description": "Observable semantic outcomes exposed by the component. Governed by .claude/context/event.md.",
+      "minProperties": 1,
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^on[a-z][a-zA-Z0-9]*$",
+        "description": "Canonical event name in lowerCamelCase beginning with 'on'."
+      },
+      "additionalProperties": { "$ref": "#/$defs/EventDefinition" }
+    },
+
+    "EventDefinition": {
+      "type": "object",
+      "title": "Event Definition",
+      "required": ["description"],
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable description of the semantic outcome represented by the event."
+        },
+        "parameters": {
+          "type": "array",
+          "description": "Runtime payload parameters. When present, payload is expressed through a single 'detail' object. Omit this field for payload-free events.",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": { "$ref": "#/$defs/EventParameter" }
+        }
+      }
+    },
+
+    "EventParameter": {
+      "type": "object",
+      "title": "Event Parameter",
+      "description": "The single 'detail' payload of a payload-bearing event.",
+      "required": ["name", "type"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "const": "detail",
+          "description": "Event runtime payload is delivered through the DOM event's `detail` property."
+        },
+        "type": {
+          "type": "string",
+          "const": "object",
+          "description": "Event runtime payload must be expressed as an object."
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "properties": {
+          "type": "object",
+          "description": "The object properties emitted through event.detail.",
+          "minProperties": 1,
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z][a-zA-Z0-9]*$"
+          },
+          "additionalProperties": { "$ref": "#/$defs/EventDetailProperty" }
+        }
+      }
+    },
+
+    "EventDetailProperty": {
+      "type": "object",
+      "title": "Event Detail Property",
+      "required": ["type"],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Declared type of the emitted property. Examples: Status, Visibility, string, Metadata."
+        },
+        "values": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Allowed values for this emitted property when the event contract constrains the outcome to a subset of the value domain."
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+
+    "Gestures": {
+      "type": "object",
+      "title": "Gestures",
+      "description": "Interaction inputs recognized by the component. Governed by .claude/context/gesture.md.",
+      "minProperties": 1,
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[a-z][a-zA-Z0-9]*$",
+        "description": "Canonical gesture name in lowerCamelCase."
+      },
+      "additionalProperties": { "$ref": "#/$defs/GestureDefinition" }
+    },
+
+    "GestureDefinition": {
+      "type": "object",
+      "title": "Gesture Definition",
+      "description": "A single gesture. Must declare exactly one of `triggers` (behavioral gesture) or `effects` (visual gesture).",
+      "required": ["description"],
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable description of the interaction input."
+        },
+        "triggers": { "$ref": "#/$defs/GestureTriggers" },
+        "effects": { "$ref": "#/$defs/GestureEffects" }
+      },
+      "oneOf": [
+        {
+          "required": ["triggers"],
+          "not": { "required": ["effects"] }
+        },
+        {
+          "required": ["effects"],
+          "not": { "required": ["triggers"] }
+        }
+      ]
+    },
+
+    "GestureTriggers": {
+      "type": "object",
+      "title": "Gesture Triggers",
+      "description": "Behavioral gesture contract. The gesture triggers runtime behavior — typically a declared operation.",
+      "required": ["condition"],
+      "additionalProperties": false,
+      "properties": {
+        "operation": {
+          "type": "string",
+          "pattern": "^[a-z][a-zA-Z0-9]*$",
+          "description": "Canonical operation name triggered by this gesture. Should match a key in `Operations`."
+        },
+        "condition": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable interaction target and condition, for example: 'on element.icon'."
+        }
+      }
+    },
+
+    "GestureEffects": {
+      "type": "object",
+      "title": "Gesture Effects",
+      "description": "Visual gesture contract. The gesture affects presentation only and is realized in CSS.",
+      "required": ["properties", "condition"],
+      "additionalProperties": false,
+      "properties": {
+        "properties": {
+          "type": "array",
+          "description": "All CSS properties affected by the gesture across all targeted elements. Per-element specifics are implementation detail owned by the CSS file.",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "condition": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable interaction target and condition, for example: 'on element.icon'."
+        }
+      }
+    }
+  }
+}

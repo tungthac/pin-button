@@ -305,6 +305,10 @@ state(State.STATUS, () => {
             expect(pin.status).toBe(Status.UNPINNED);
           });
         });
+
+        then("`status` attribute exists", () => {
+          expect(pin.getAttribute(Attributes.STATUS)).not.toBeNull();
+        });
       });
     });
   });

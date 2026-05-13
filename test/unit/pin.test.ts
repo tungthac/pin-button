@@ -366,6 +366,47 @@ events(Event.ON_HIDE, () => {
         then("`pin.onhide` setter exists", () => {
           expect(hasSetter(pin, Event.ON_HIDE)).toBeTrue();
         });
+
+        and("`pin.onhide` setter exists", () => {
+          and("`pin.onhide` is set to a listener", () => {
+            let onhide: jasmine.Spy;
+            beforeEach(() => {
+              onhide = jasmine.createSpy("onhide");
+              pin.onhide = onhide;
+            });
+            afterEach(() => {
+              pin.onhide = null;
+            });
+
+            and("`pin.onhide` is set to a new listener", () => {
+              let onhide2: jasmine.Spy;
+              beforeEach(() => {
+                onhide2 = jasmine.createSpy("onhide2");
+                pin.onhide = onhide2;
+              });
+              afterEach(() => {
+                pin.onhide = null;
+              });
+
+              when("`pin.visibility` is set to `Visibility.HIDDEN`", () => {
+                beforeEach(() => {
+                  pin.visibility = Visibility.HIDDEN;
+                });
+                afterEach(() => {
+                  pin.visibility = Visibility.VISIBLE;
+                });
+
+                then("old `pin.onhide` is not called", () => {
+                  expect(onhide).not.toHaveBeenCalled();
+                });
+
+                then("new `pin.onhide` is called", () => {
+                  expect(onhide2).toHaveBeenCalled();
+                });
+              });
+            });
+          });
+        });
       });
     });
   });

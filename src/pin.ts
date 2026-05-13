@@ -73,10 +73,10 @@ export class Pin extends Component {
   }
 
   /**
-   * Hides the pin (no-op placeholder, behavior added in subsequent commit).
+   * Sets visibility to HIDDEN.
    * @category Operation
    */
-  public hide = () => {};
+  public hide = () => (this.visibility = Visibility.HIDDEN);
 
   /**
    * Sets the visibility state.

@@ -6,7 +6,8 @@ import {
   CSS,
   Attributes,
   State,
-  Visibility
+  Visibility,
+  Operation
 } from "@tungthac/pin-button";
 
 // Configuration
@@ -266,6 +267,36 @@ state(State.VISIBILITY, () => {
 });
 
 // Operation
+operation(Operation.HIDE, () => {
+  and("Pin is defined in custom element registry", () => {
+    beforeEach(() => {
+      define(Pin.Tag, Pin);
+    });
+
+    and("HTML Template is added to DOM", () => {
+      beforeEach(async () => {
+        await Pin.Template.load("pin.template.html");
+      });
+      afterEach(() => {
+        remove(Pin.Tag);
+      });
+
+      and("a new pin is added to DOM", () => {
+        let pin: Pin;
+        beforeEach(() => {
+          pin = add<Pin>(Pin.Tag);
+        });
+        afterEach(() => {
+          pin.remove();
+        });
+
+        then("`pin.hide` method exists", () => {
+          expect(pin.hide).toBeDefined();
+        });
+      });
+    });
+  });
+});
 
 // Event
 

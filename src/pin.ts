@@ -7,7 +7,7 @@ import { Component, Template } from "@scalable.software/component";
 import { type Configuration } from "@scalable.software/component";
 
 // Component Metadata
-import { Tag, CSS, Attributes, Visibility } from "./pin.meta.js";
+import { Tag, CSS, Attributes, Visibility, Event } from "./pin.meta.js";
 import { Validate } from "./pin.validation.js";
 
 /**
@@ -83,6 +83,23 @@ export class Pin extends Component {
    * @category Operation
    */
   public show = () => (this.visibility = Visibility.VISIBLE);
+
+  /**
+   * onhide subscription handler slot.
+   * @category Event
+   * @hidden
+   */
+  private _onhide: EventListener | null = null;
+
+  /**
+   * Subscribes a listener to the onhide event.
+   * @category Event
+   */
+  public set onhide(handler: EventListener | null) {
+    this._onhide && this.removeEventListener(Event.ON_HIDE, this._onhide);
+    this._onhide = handler;
+    this._onhide && this.addEventListener(Event.ON_HIDE, this._onhide);
+  }
 
   /**
    * Sets the visibility state.

@@ -421,6 +421,10 @@ operation(Operation.PIN, () => {
             });
           });
         });
+
+        then("`pin.unpin` method exists", () => {
+          expect(pin.unpin).toBeDefined();
+        });
       });
     });
   });

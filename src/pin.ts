@@ -76,6 +76,7 @@ export class Pin extends Component {
    * @category State
    */
   public set visibility(visibility: Visibility) {
+    visibility = visibility ?? Visibility.VISIBLE;
     this._visibility = visibility;
   }
 

@@ -209,8 +209,7 @@ state(State.VISIBILITY, () => {
 
           when("`pin.visibility` is set to `null`", () => {
             beforeEach(() => {
-              // @ts-expect-error null arrives from attributeChangedCallback on attribute removal
-              pin.visibility = null;
+              pin.visibility = null as unknown as Visibility;
             });
             afterEach(() => {
               pin.visibility = Visibility.VISIBLE;

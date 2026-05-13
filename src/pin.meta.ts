@@ -80,7 +80,8 @@ export type State = (typeof State)[keyof typeof State];
  */
 export const Operation = {
   HIDE: "hide",
-  SHOW: "show"
+  SHOW: "show",
+  PIN: "pin"
 } as const;
 
 /**

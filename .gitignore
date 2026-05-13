@@ -5,3 +5,9 @@ package-lock.json
 .npmrc
 dist/
 !dist/.gitkeep
+
+# Compiled test/source artifacts (pretest tsc output, cleaned by posttest only when tests pass)
+src/**/*.js
+src/**/*.map
+test/unit/**/*.js
+test/unit/**/*.map

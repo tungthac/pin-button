@@ -122,10 +122,12 @@ export class Pin extends Component {
   public unpin = () => (this.status = Status.UNPINNED);
 
   /**
-   * Toggles pin status between PINNED and UNPINNED (placeholder — behavior added in subsequent commit).
+   * Toggles pin status between PINNED and UNPINNED.
    * @category Operation
    */
-  public toggle = () => {};
+  public toggle = () =>
+    (this.status =
+      this.status === Status.PINNED ? Status.UNPINNED : Status.PINNED);
 
   /**
    * onhide subscription handler slot.

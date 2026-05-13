@@ -1,9 +1,11 @@
 {
-  "name": "@scalable.software/component.template",
-  "version": "0.3.1",
-  "description": "A template for creating web components using Scalable.Software standards and practices.",
+  "name": "@tungthac/pin-button",
+  "version": "0.1.0",
+  "description": "A reusable PinButton web component built on @scalable.software/component, with declarative state, validation, operations, events, and gestures.",
   "keywords": [
-    "web component"
+    "web component",
+    "pin-button",
+    "custom element"
   ],
   "exports": {
     ".": {
@@ -26,14 +28,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/scalable-software/component.template.git"
+    "url": "git+https://github.com/tungthac/pin-button.git"
   },
-  "author": "Scalable.Software",
+  "author": "tungthac",
   "license": "CC-BY-NC-SA-4.0",
   "bugs": {
-    "url": "https://github.com/scalable-software/component.template/issues"
+    "url": "https://github.com/tungthac/pin-button/issues"
   },
-  "homepage": "https://github.com/scalable-software/component.template#readme",
+  "homepage": "https://github.com/tungthac/pin-button#readme",
   "devDependencies": {
     "@types/jasmine": "^5.1.4",
     "@web/dev-server": "^0.4.6",

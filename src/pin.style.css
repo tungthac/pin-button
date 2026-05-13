@@ -53,3 +53,7 @@ svg {
     fill 0.2s,
     opacity 0.2s;
 }
+
+:host([visibility="hidden"]) {
+  display: none;
+}

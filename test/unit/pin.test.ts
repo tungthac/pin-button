@@ -939,4 +939,38 @@ events(Event.ON_UNPIN, () => {
   });
 });
 
+composition(Composition.ELEMENT, () => {
+  and("Pin is defined in custom element registry", () => {
+    beforeEach(() => {
+      define(Pin.Tag, Pin);
+    });
+
+    and("HTML Template is added to DOM", () => {
+      beforeEach(async () => {
+        await Pin.Template.load("pin.template.html");
+      });
+      afterEach(() => {
+        remove(Pin.Tag);
+      });
+
+      and("a new pin is added to DOM", () => {
+        let pin: Pin;
+        beforeEach(() => {
+          pin = add<Pin>(Pin.Tag);
+        });
+        afterEach(() => {
+          pin.remove();
+        });
+
+        then("`pin.elements.icon` is a cached reference to the `div` with class `icon`", () => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          expect((pin as any).elements.icon).toBe(
+            pin.root.querySelector("div.icon")
+          );
+        });
+      });
+    });
+  });
+});
+
 // Gesture

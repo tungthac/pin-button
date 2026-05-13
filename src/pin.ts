@@ -65,12 +65,11 @@ export class Pin extends Component {
   private _visibility: Visibility = Visibility.VISIBLE;
 
   /**
-   * Canonical pin status state (minimum to satisfy "getter exists";
-   * default value verified in subsequent commit).
+   * Canonical pin status state.
    * @category State
    * @hidden
    */
-  private _status: Status = Status.PINNED;
+  private _status: Status = Status.UNPINNED;
 
   /**
    * Returns the current pin status.

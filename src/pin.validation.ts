@@ -14,5 +14,11 @@ export class Validate {
    * Validates a visibility value.
    * @category Validation
    */
-  public static visibility = (value: string) => value as Visibility;
+  public static visibility = (value: string) => {
+    const valid = Object.values(Visibility).includes(value as Visibility);
+    if (!valid) {
+      throw new Error(`Invalid visibility value: ${value}`);
+    }
+    return value as Visibility;
+  };
 }

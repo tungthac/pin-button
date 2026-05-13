@@ -2,7 +2,7 @@
  * @module Pin
  */
 
-import { Visibility } from "./pin.meta.js";
+import { Visibility, Status } from "./pin.meta.js";
 
 /**
  * Runtime input enforcement for Pin state value domains.
@@ -21,4 +21,10 @@ export class Validate {
     }
     return value as Visibility;
   };
+
+  /**
+   * Validates a status value (minimum stub — throw logic added in subsequent commit).
+   * @category Validation
+   */
+  public static status = (value: string) => value as Status;
 }

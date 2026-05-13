@@ -18,7 +18,8 @@ export const CSS = "pin.style.css" as const;
  * @enum
  */
 export const Attributes = {
-  VISIBILITY: "visibility"
+  VISIBILITY: "visibility",
+  STATUS: "status"
 } as const;
 /**
  * HTML Attributes available to set

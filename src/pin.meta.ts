@@ -40,7 +40,9 @@ export const State = {
  * @category Metadata
  * @enum
  */
-export const Visibility = {} as const;
+export const Visibility = {
+  VISIBLE: "visible"
+} as const;
 
 /**
  * Visibility value domain

@@ -80,11 +80,12 @@ export class Pin extends Component {
   }
 
   /**
-   * Sets the pin status (no-op placeholder, mutation added in subsequent commit).
+   * Sets the pin status.
    * @category State
    */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public set status(status: Status) {}
+  public set status(status: Status) {
+    this._status = status;
+  }
 
   /**
    * Returns the current visibility state.

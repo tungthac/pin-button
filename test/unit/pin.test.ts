@@ -293,6 +293,21 @@ operation(Operation.HIDE, () => {
         then("`pin.hide` method exists", () => {
           expect(pin.hide).toBeDefined();
         });
+
+        and("`pin.hide` method exists", () => {
+          when("invoking `pin.hide`", () => {
+            beforeEach(() => {
+              pin.hide();
+            });
+            afterEach(() => {
+              pin.visibility = Visibility.VISIBLE;
+            });
+
+            then("`pin.visibility` is `Visibility.HIDDEN`", () => {
+              expect(pin.visibility).toBe(Visibility.HIDDEN);
+            });
+          });
+        });
       });
     });
   });

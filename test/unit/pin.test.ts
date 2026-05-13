@@ -206,6 +206,20 @@ state(State.VISIBILITY, () => {
               expect(pin.visibility).toBe(Visibility.HIDDEN);
             });
           });
+
+          when("`pin.visibility` is set to `null`", () => {
+            beforeEach(() => {
+              // @ts-expect-error null arrives from attributeChangedCallback on attribute removal
+              pin.visibility = null;
+            });
+            afterEach(() => {
+              pin.visibility = Visibility.VISIBLE;
+            });
+
+            then("`pin.visibility` is `Visibility.VISIBLE`", () => {
+              expect(pin.visibility).toBe(Visibility.VISIBLE);
+            });
+          });
         });
       });
     });

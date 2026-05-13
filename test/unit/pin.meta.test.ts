@@ -5,7 +5,7 @@ import {
   Operation,
   Event,
   Gesture
-} from "@scalable.software/component.template";
+} from "@tungthac/pin-button";
 
 // Tag
 metadata(Metadata.TAG, () => {

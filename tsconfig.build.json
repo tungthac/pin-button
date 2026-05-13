@@ -7,7 +7,7 @@
     "rootDir": "./src",
     "outDir": "./dist/",
     "paths": {
-      "@scalable.software/component.template": ["./src/index.js"]
+      "@tungthac/pin-button": ["./src/index.js"]
     }
   },
   "include": ["./src/**/*"]

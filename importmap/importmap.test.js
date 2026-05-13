@@ -6,7 +6,7 @@
 inject(
   {
     imports: {
-      "@scalable.software/component.template": "./src/index.js",
+      "@tungthac/pin-button": "./src/index.js",
       "@scalable.software/component":
         "./node_modules/@scalable.software/component/dist/index.js"
     }

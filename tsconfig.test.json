@@ -6,7 +6,7 @@
     "sourceMap": true,
     "inlineSources": true,
     "paths": {
-      "@scalable.software/component.template": ["./src/index.js"]
+      "@tungthac/pin-button": ["./src/index.js"]
     },
     "types": ["jasmine"],
     "declaration": false

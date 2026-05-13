@@ -111,6 +111,8 @@ export class Pin extends Component {
     this._visibility = visibility;
     visibility === Visibility.VISIBLE && this.removeAttribute(Attributes.VISIBILITY);
     visibility === Visibility.HIDDEN && this.setAttribute(Attributes.VISIBILITY, visibility);
+
+    visibility === Visibility.HIDDEN && this._dispatchEvent(Event.ON_HIDE);
   }
 
   /**

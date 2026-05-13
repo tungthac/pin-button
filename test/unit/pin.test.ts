@@ -72,7 +72,7 @@ composition(Composition.TEMPLATE, () => {
       let template: HTMLTemplateElement;
       beforeEach(async () => {
         template = (await Component.Template.load(
-          "component.template.html"
+          "pin.template.html"
         )) as HTMLTemplateElement;
       });
       afterEach(() => {
@@ -107,7 +107,7 @@ composition(Composition.CSS, () => {
     });
     and("HTML Template is added to DOM", () => {
       beforeEach(async () => {
-        await Component.Template.load("component.template.html");
+        await Component.Template.load("pin.template.html");
       });
       afterEach(() => {
         remove(Component.Tag);

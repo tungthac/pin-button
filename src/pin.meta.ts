@@ -17,7 +17,9 @@ export const CSS = "pin.style.css" as const;
  * @category Metadata
  * @enum
  */
-export const Attributes = {} as const;
+export const Attributes = {
+  VISIBILITY: "visibility"
+} as const;
 /**
  * HTML Attributes available to set
  * @category Metadata

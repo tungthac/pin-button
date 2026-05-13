@@ -85,6 +85,7 @@ export class Pin extends Component {
    */
   public set status(status: Status) {
     this._status = status;
+    this.setAttribute(Attributes.STATUS, status);
   }
 
   /**

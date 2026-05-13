@@ -53,6 +53,19 @@ export const Visibility = {
 export type Visibility = (typeof Visibility)[keyof typeof Visibility];
 
 /**
+ * Status value domain
+ * @category Metadata
+ * @enum
+ */
+export const Status = {} as const;
+
+/**
+ * Status value domain
+ * @category Metadata
+ */
+export type Status = (typeof Status)[keyof typeof Status];
+
+/**
  * HTML Attributes available to set
  * @category Metadata
  */

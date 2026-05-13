@@ -85,6 +85,7 @@ export class Pin extends Component {
    */
   public set status(status: Status) {
     status = Validate.status(status);
+    if (this._status === status) return;
     this._status = status;
     this.setAttribute(Attributes.STATUS, status);
 
@@ -208,6 +209,7 @@ export class Pin extends Component {
   public set visibility(visibility: Visibility) {
     visibility = visibility ?? Visibility.VISIBLE;
     visibility = Validate.visibility(visibility);
+    if (this._visibility === visibility) return;
     this._visibility = visibility;
     visibility === Visibility.VISIBLE && this.removeAttribute(Attributes.VISIBILITY);
     visibility === Visibility.HIDDEN && this.setAttribute(Attributes.VISIBILITY, visibility);

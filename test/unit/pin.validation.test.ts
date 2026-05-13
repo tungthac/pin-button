@@ -113,6 +113,93 @@ validation(State.STATUS, () => {
       then("`Validate.status` static method is defined", () => {
         expect(Validate.status).toBeDefined();
       });
+
+      and("`value` is `Status.PINNED`", () => {
+        let value: any;
+        beforeEach(() => {
+          value = Status.PINNED;
+        });
+
+        when("`Validate.status(value)` is called", () => {
+          let error: unknown | undefined;
+          let result: any;
+          beforeEach(() => {
+            try {
+              result = Validate.status(value);
+            } catch (err) {
+              error = err;
+            }
+          });
+
+          then("no error is thrown", () => {
+            expect(error).toBeUndefined();
+          });
+
+          then("result is `Status.PINNED`", () => {
+            expect(result).toBe(Status.PINNED);
+          });
+        });
+      });
+
+      and("`value` is `Status.UNPINNED`", () => {
+        let value: any;
+        beforeEach(() => {
+          value = Status.UNPINNED;
+        });
+
+        when("`Validate.status(value)` is called", () => {
+          let error: unknown | undefined;
+          let result: any;
+          beforeEach(() => {
+            try {
+              result = Validate.status(value);
+            } catch (err) {
+              error = err;
+            }
+          });
+
+          then("no error is thrown", () => {
+            expect(error).toBeUndefined();
+          });
+
+          then("result is `Status.UNPINNED`", () => {
+            expect(result).toBe(Status.UNPINNED);
+          });
+        });
+      });
+
+      and("`value` is `invalid`", () => {
+        let value: any;
+        beforeEach(() => {
+          value = "invalid";
+        });
+
+        when("`Validate.status(value)` is called", () => {
+          let error: unknown | undefined;
+          beforeEach(() => {
+            try {
+              Validate.status(value);
+            } catch (err) {
+              error = err;
+            }
+          });
+
+          then("an error is thrown", () => {
+            expect(error).not.toBeUndefined();
+          });
+
+          and("an error is thrown", () => {
+            then(
+              "error message contains 'Invalid status value: invalid'",
+              () => {
+                expect((error as Error).message).toEqual(
+                  "Invalid status value: invalid"
+                );
+              }
+            );
+          });
+        });
+      });
     });
   });
 });

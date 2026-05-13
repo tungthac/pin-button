@@ -57,7 +57,9 @@ export type Visibility = (typeof Visibility)[keyof typeof Visibility];
  * @category Metadata
  * @enum
  */
-export const Status = {} as const;
+export const Status = {
+  PINNED: "pinned"
+} as const;
 
 /**
  * Status value domain

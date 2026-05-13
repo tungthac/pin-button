@@ -100,3 +100,11 @@ svg {
     box-shadow: var(--button-hover-shadow);
   }
 }
+
+@media (hover: hover) {
+  :host([status="pinned"]) .icon:hover {
+    background-color: var(--button-pinned-hover-background-color);
+    border-color: var(--button-hover-border-color);
+    box-shadow: var(--button-hover-shadow);
+  }
+}

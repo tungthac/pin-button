@@ -236,6 +236,29 @@ state(State.VISIBILITY, () => {
               expect(pin.visibility).toBe(Visibility.HIDDEN);
             });
           });
+
+          when("`pin.visibility` is set to `invalid`", () => {
+            let error: Error;
+            beforeEach(() => {
+              try {
+                // @ts-expect-error - intentional invalid input
+                pin.visibility = "invalid";
+              } catch (err) {
+                error = err as Error;
+              }
+            });
+            afterEach(() => {
+              pin.visibility = Visibility.VISIBLE;
+            });
+
+            then("an error is thrown", () => {
+              expect(error).toBeDefined();
+            });
+
+            then("error message contains 'Invalid visibility value: invalid'", () => {
+              expect(error.message).toBe("Invalid visibility value: invalid");
+            });
+          });
         });
       });
     });

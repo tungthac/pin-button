@@ -87,6 +87,8 @@ export class Pin extends Component {
     status = Validate.status(status);
     this._status = status;
     this.setAttribute(Attributes.STATUS, status);
+
+    status === Status.PINNED && this._dispatchEvent(Event.ON_PIN);
   }
 
   /**

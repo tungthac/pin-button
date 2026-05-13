@@ -379,6 +379,38 @@ state(State.STATUS, () => {
   });
 });
 
+// Operation — Toggle composite group
+operation(Operation.TOGGLE, () => {
+  and("Pin is defined in custom element registry", () => {
+    beforeEach(() => {
+      define(Pin.Tag, Pin);
+    });
+
+    and("HTML Template is added to DOM", () => {
+      beforeEach(async () => {
+        await Pin.Template.load("pin.template.html");
+      });
+      afterEach(() => {
+        remove(Pin.Tag);
+      });
+
+      and("a new pin is added to DOM", () => {
+        let pin: Pin;
+        beforeEach(() => {
+          pin = add<Pin>(Pin.Tag);
+        });
+        afterEach(() => {
+          pin.remove();
+        });
+
+        then("`pin.toggle` method exists", () => {
+          expect(pin.toggle).toBeDefined();
+        });
+      });
+    });
+  });
+});
+
 // Operation — Pin/Unpin paired group
 operation(Operation.PIN, () => {
   and("Pin is defined in custom element registry", () => {

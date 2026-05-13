@@ -115,6 +115,11 @@ composition(Composition.TEMPLATE, () => {
             const svg = div.querySelector("svg.unpinned");
             expect(svg).not.toBeNull();
           });
+
+          then("`div.icon` contains `svg.pinned`", () => {
+            const svg = div.querySelector("svg.pinned");
+            expect(svg).not.toBeNull();
+          });
         });
       });
     });

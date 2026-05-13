@@ -75,6 +75,12 @@ metadata(State.STATUS, () => {
       then("Status is an object", () => {
         expect(typeof Status).toBe("object");
       });
+
+      when("Status is an object", () => {
+        then("`Status.PINNED` exists", () => {
+          expect(Status.PINNED).toBeDefined();
+        });
+      });
     });
   });
 });

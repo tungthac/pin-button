@@ -319,6 +319,21 @@ state(State.STATUS, () => {
         then("`pin.status` setter exists", () => {
           expect(hasSetter(pin, "status")).toBeTrue();
         });
+
+        and("`pin.status` setter exists", () => {
+          when("`pin.status` is set to `Status.PINNED`", () => {
+            beforeEach(() => {
+              pin.status = Status.PINNED;
+            });
+            afterEach(() => {
+              pin.status = Status.UNPINNED;
+            });
+
+            then("`pin.status` is `Status.PINNED`", () => {
+              expect(pin.status).toBe(Status.PINNED);
+            });
+          });
+        });
       });
     });
   });

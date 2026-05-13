@@ -425,6 +425,27 @@ operation(Operation.PIN, () => {
         then("`pin.unpin` method exists", () => {
           expect(pin.unpin).toBeDefined();
         });
+
+        and("`pin.unpin` method exists", () => {
+          and("`pin.status` is `Status.PINNED`", () => {
+            beforeEach(() => {
+              pin.status = Status.PINNED;
+            });
+            afterEach(() => {
+              pin.status = Status.UNPINNED;
+            });
+
+            when("invoking `pin.unpin`", () => {
+              beforeEach(() => {
+                pin.unpin();
+              });
+
+              then("`pin.status` is `Status.UNPINNED`", () => {
+                expect(pin.status).toBe(Status.UNPINNED);
+              });
+            });
+          });
+        });
       });
     });
   });

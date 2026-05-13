@@ -1,0 +1,8 @@
+{
+  "buildCommand": "npm run build && node ./tasks/prepare.deploy.mjs",
+  "outputDirectory": "public",
+  "framework": null,
+  "rewrites": [
+    { "source": "/", "destination": "/demo/index.html" }
+  ]
+}

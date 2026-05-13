@@ -14,3 +14,7 @@ test/unit/**/*.map
 
 # Session-local progress notes (not part of deliverable)
 PROGRESS.md
+
+# Vercel deploy artifacts
+public/
+.vercel/

@@ -172,6 +172,10 @@ metadata(Metadata.EVENT, () => {
       then("`Event.ON_PIN` exists", () => {
         expect(Event.ON_PIN).toBeDefined();
       });
+
+      then("`Event.ON_UNPIN` exists", () => {
+        expect(Event.ON_UNPIN).toBeDefined();
+      });
     });
   });
 });

@@ -61,7 +61,7 @@ export class Pin extends Component {
    * @category State
    * @hidden
    */
-  private _visibility: Visibility = Visibility.HIDDEN;
+  private _visibility: Visibility = Visibility.VISIBLE;
 
   /**
    * Returns the current visibility state.

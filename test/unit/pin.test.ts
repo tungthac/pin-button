@@ -406,6 +406,46 @@ operation(Operation.TOGGLE, () => {
         then("`pin.toggle` method exists", () => {
           expect(pin.toggle).toBeDefined();
         });
+
+        and("`pin.toggle` method exists", () => {
+          and("`pin.status` is set to `Status.UNPINNED`", () => {
+            beforeEach(() => {
+              pin.status = Status.UNPINNED;
+            });
+            afterEach(() => {
+              pin.status = Status.UNPINNED;
+            });
+
+            when("invoking `pin.toggle`", () => {
+              beforeEach(() => {
+                pin.toggle();
+              });
+
+              then("`pin.status` is `Status.PINNED`", () => {
+                expect(pin.status).toBe(Status.PINNED);
+              });
+            });
+          });
+
+          and("`pin.status` is set to `Status.PINNED`", () => {
+            beforeEach(() => {
+              pin.status = Status.PINNED;
+            });
+            afterEach(() => {
+              pin.status = Status.UNPINNED;
+            });
+
+            when("invoking `pin.toggle`", () => {
+              beforeEach(() => {
+                pin.toggle();
+              });
+
+              then("`pin.status` is `Status.UNPINNED`", () => {
+                expect(pin.status).toBe(Status.UNPINNED);
+              });
+            });
+          });
+        });
       });
     });
   });

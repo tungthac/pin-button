@@ -133,6 +133,10 @@ metadata(Metadata.OPERATION, () => {
       then("`Operation.SHOW` exists", () => {
         expect(Operation.SHOW).toBeDefined();
       });
+
+      then("`Operation.PIN` exists", () => {
+        expect(Operation.PIN).toBeDefined();
+      });
     });
   });
 });

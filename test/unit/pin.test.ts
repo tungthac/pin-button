@@ -656,8 +656,8 @@ events(Event.ON_HIDE, () => {
                   expect(onhide).not.toHaveBeenCalled();
                 });
 
-                then("new `pin.onhide` is called", () => {
-                  expect(onhide2).toHaveBeenCalled();
+                then("new `pin.onhide` is called exactly once", () => {
+                  expect(onhide2).toHaveBeenCalledTimes(1);
                 });
 
                 then(
@@ -744,8 +744,8 @@ events(Event.ON_SHOW, () => {
                     expect(onshow).not.toHaveBeenCalled();
                   });
 
-                  then("new `pin.onshow` is called", () => {
-                    expect(onshow2).toHaveBeenCalled();
+                  then("new `pin.onshow` is called exactly once", () => {
+                    expect(onshow2).toHaveBeenCalledTimes(1);
                   });
 
                   then(
@@ -828,8 +828,8 @@ events(Event.ON_PIN, () => {
                   expect(onpin).not.toHaveBeenCalled();
                 });
 
-                then("new `pin.onpin` is called", () => {
-                  expect(onpin2).toHaveBeenCalled();
+                then("new `pin.onpin` is called exactly once", () => {
+                  expect(onpin2).toHaveBeenCalledTimes(1);
                 });
 
                 then(
@@ -916,8 +916,8 @@ events(Event.ON_UNPIN, () => {
                     expect(onunpin).not.toHaveBeenCalled();
                   });
 
-                  then("new `pin.onunpin` is called", () => {
-                    expect(onunpin2).toHaveBeenCalled();
+                  then("new `pin.onunpin` is called exactly once", () => {
+                    expect(onunpin2).toHaveBeenCalledTimes(1);
                   });
 
                   then(

@@ -62,7 +62,8 @@ export type State = (typeof State)[keyof typeof State];
  * @enum
  */
 export const Operation = {
-  HIDE: "hide"
+  HIDE: "hide",
+  SHOW: "show"
 } as const;
 
 /**

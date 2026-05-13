@@ -830,6 +830,17 @@ events(Event.ON_PIN, () => {
                 then("new `pin.onpin` is called", () => {
                   expect(onpin2).toHaveBeenCalled();
                 });
+
+                then(
+                  "new `pin.onpin` is called with `{ detail: { status: Status.PINNED } }`",
+                  () => {
+                    expect(onpin2).toHaveBeenCalledWith(
+                      jasmine.objectContaining({
+                        detail: { status: Status.PINNED }
+                      })
+                    );
+                  }
+                );
               });
             });
           });

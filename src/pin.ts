@@ -90,6 +90,7 @@ export class Pin extends Component {
 
     const event = { detail: { status } };
     status === Status.PINNED && this._dispatchEvent(Event.ON_PIN, event);
+    status === Status.UNPINNED && this._dispatchEvent(Event.ON_UNPIN);
   }
 
   /**

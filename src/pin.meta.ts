@@ -5,12 +5,12 @@
 /**
  * @category Configuration
  */
-export const Tag = "component-template" as const;
+export const Tag = "pin-button" as const;
 
 /**
  * @category Configuration
  */
-export const CSS = "component.style.css" as const;
+export const CSS = "pin.style.css" as const;
 
 /**
  * HTML Attributes available to set

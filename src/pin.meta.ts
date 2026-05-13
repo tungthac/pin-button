@@ -81,7 +81,8 @@ export type State = (typeof State)[keyof typeof State];
 export const Operation = {
   HIDE: "hide",
   SHOW: "show",
-  PIN: "pin"
+  PIN: "pin",
+  UNPIN: "unpin"
 } as const;
 
 /**

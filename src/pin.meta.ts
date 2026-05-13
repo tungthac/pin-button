@@ -61,7 +61,9 @@ export type State = (typeof State)[keyof typeof State];
  * @category Metadata
  * @enum
  */
-export const Operation = {} as const;
+export const Operation = {
+  HIDE: "hide"
+} as const;
 
 /**
  * @category Metadata

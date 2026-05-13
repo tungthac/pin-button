@@ -88,7 +88,8 @@ export class Pin extends Component {
     this._status = status;
     this.setAttribute(Attributes.STATUS, status);
 
-    status === Status.PINNED && this._dispatchEvent(Event.ON_PIN);
+    const event = { detail: { status } };
+    status === Status.PINNED && this._dispatchEvent(Event.ON_PIN, event);
   }
 
   /**

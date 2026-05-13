@@ -116,6 +116,12 @@ export class Pin extends Component {
   public pin = () => (this.status = Status.PINNED);
 
   /**
+   * Sets pin status to UNPINNED (placeholder — behavior added in subsequent commit).
+   * @category Operation
+   */
+  public unpin = () => {};
+
+  /**
    * onhide subscription handler slot.
    * @category Event
    * @hidden

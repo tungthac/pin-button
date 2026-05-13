@@ -164,6 +164,23 @@ export class Pin extends Component {
   }
 
   /**
+   * onpin subscription handler slot.
+   * @category Event
+   * @hidden
+   */
+  private _onpin: EventListener | null = null;
+
+  /**
+   * Subscribes a listener to the onpin event.
+   * @category Event
+   */
+  public set onpin(handler: EventListener | null) {
+    this._onpin && this.removeEventListener(Event.ON_PIN, this._onpin);
+    this._onpin = handler;
+    this._onpin && this.addEventListener(Event.ON_PIN, this._onpin);
+  }
+
+  /**
    * Sets the visibility state.
    * @category State
    */

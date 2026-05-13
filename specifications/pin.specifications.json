@@ -1,0 +1,162 @@
+{
+  "Component": "Pin",
+  "Package": "pin-button",
+  "Description": "Pin is a small interactive control that toggles between pinned and unpinned states. It can be embedded within any part of a digital product — a panel, a toolbar, a card, or a dashboard widget — wherever a user may want to fix something in position or release it.",
+  "Tag": "pin-button",
+  "Composition": {
+    "template": {
+      "description": "The HTML template for the pin component.",
+      "contains": ["div.icon"],
+      "type": "template",
+      "id": "pin-button"
+    },
+    "div.icon": {
+      "description": "The main container of the pin component, styled as a button.",
+      "contains": ["svg.pinned", "svg.unpinned"],
+      "type": "div",
+      "class": "icon",
+      "cached": true
+    },
+    "svg.pinned": {
+      "description": "The SVG icon used for the pinned mode.",
+      "type": "svg",
+      "class": "pinned"
+    },
+    "svg.unpinned": {
+      "description": "The SVG icon used for the unpinned mode.",
+      "type": "svg",
+      "class": "unpinned"
+    }
+  },
+  "States": {
+    "visibility": {
+      "type": "Visibility",
+      "description": "Indicates whether the component is shown or hidden.",
+      "values": ["visible", "hidden"],
+      "default": "visible",
+      "readonly": false,
+      "attribute": {
+        "optional": true
+      }
+    },
+    "status": {
+      "type": "Status",
+      "description": "Indicates the component's pin status.",
+      "values": ["pinned", "unpinned"],
+      "default": "unpinned",
+      "readonly": false,
+      "attribute": {
+        "optional": false
+      }
+    }
+  },
+  "Operations": {
+    "hide": {
+      "description": "Sets 'visibility' state to 'hidden' and hides the pin.",
+      "parameters": [],
+      "returns": "void"
+    },
+    "show": {
+      "description": "Sets 'visibility' state to 'visible' and shows the pin.",
+      "parameters": [],
+      "returns": "void"
+    },
+    "pin": {
+      "description": "Sets the 'status' to 'pinned', and pins the pin.",
+      "parameters": [],
+      "returns": "void"
+    },
+    "unpin": {
+      "description": "Sets the 'status' to 'unpinned', and unpins the pin.",
+      "parameters": [],
+      "returns": "void"
+    },
+    "toggle": {
+      "description": "Toggles the 'status' between 'pinned' and 'unpinned'.",
+      "parameters": [],
+      "returns": "void"
+    }
+  },
+  "Events": {
+    "onhide": {
+      "description": "Dispatched when pin 'visibility' state changes from 'visible' to 'hidden'.",
+      "parameters": [
+        {
+          "name": "detail",
+          "type": "object",
+          "description": "Contains the new visibility state of the component.",
+          "properties": {
+            "visibility": {
+              "type": "Visibility",
+              "values": ["hidden"]
+            }
+          }
+        }
+      ]
+    },
+    "onshow": {
+      "description": "Dispatched when pin 'visibility' state changes from 'hidden' to 'visible'.",
+      "parameters": [
+        {
+          "name": "detail",
+          "type": "object",
+          "description": "Contains the new visibility state of the component.",
+          "properties": {
+            "visibility": {
+              "type": "Visibility",
+              "values": ["visible"]
+            }
+          }
+        }
+      ]
+    },
+    "onpin": {
+      "description": "Dispatched when pin 'status' changes from 'unpinned' to 'pinned'.",
+      "parameters": [
+        {
+          "name": "detail",
+          "type": "object",
+          "description": "Contains the new status of the component.",
+          "properties": {
+            "status": {
+              "type": "Status",
+              "values": ["pinned"]
+            }
+          }
+        }
+      ]
+    },
+    "onunpin": {
+      "description": "Dispatched when pin 'status' changes from 'pinned' to 'unpinned'.",
+      "parameters": [
+        {
+          "name": "detail",
+          "type": "object",
+          "description": "Contains the new status of the component.",
+          "properties": {
+            "status": {
+              "type": "Status",
+              "values": ["unpinned"]
+            }
+          }
+        }
+      ]
+    }
+  },
+  "Gestures": {
+    "click": {
+      "description": "User clicks the icon to toggle the pin status.",
+      "triggers": {
+        "operation": "toggle",
+        "condition": "on element.icon"
+      }
+    },
+    "hover": {
+      "description": "Changes the button appearance when hovered.",
+      "effects": {
+        "properties": ["background-color", "border-color", "box-shadow", "fill"],
+        "condition": "on element.icon"
+      }
+    }
+  }
+}

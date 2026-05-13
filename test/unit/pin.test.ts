@@ -205,6 +205,10 @@ state(State.VISIBILITY, () => {
             then("`pin.visibility` is `Visibility.HIDDEN`", () => {
               expect(pin.visibility).toBe(Visibility.HIDDEN);
             });
+
+            then("pin `visibility` attribute is `Visibility.HIDDEN`", () => {
+              expect(pin.getAttribute(Attributes.VISIBILITY)).toBe(Visibility.HIDDEN);
+            });
           });
 
           when("`pin.visibility` is set to `null`", () => {

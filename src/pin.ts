@@ -110,10 +110,10 @@ export class Pin extends Component {
   public show = () => (this.visibility = Visibility.VISIBLE);
 
   /**
-   * Sets pin status (placeholder — behavior added in subsequent commit).
+   * Sets pin status to PINNED.
    * @category Operation
    */
-  public pin = () => {};
+  public pin = () => (this.status = Status.PINNED);
 
   /**
    * onhide subscription handler slot.

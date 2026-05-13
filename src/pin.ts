@@ -84,6 +84,7 @@ export class Pin extends Component {
    * @category State
    */
   public set status(status: Status) {
+    status = Validate.status(status);
     this._status = status;
     this.setAttribute(Attributes.STATUS, status);
   }

@@ -1,7 +1,7 @@
 import { Template } from "@scalable.software/component";
 
 import {
-  component as Component,
+  Pin,
   Tag,
   CSS,
   Attributes
@@ -9,19 +9,19 @@ import {
 
 // Configuration
 configuration(Configuration.TAG, () => {
-  and("Component imported", () => {
-    then("Component is defined", () => {
-      expect(Component).toBeDefined();
+  and("Pin imported", () => {
+    then("Pin is defined", () => {
+      expect(Pin).toBeDefined();
     });
 
-    and("Component is defined", () => {
-      then("Component.Tag static getter is defined", () => {
-        expect(Component.Tag).toBeDefined();
+    and("Pin is defined", () => {
+      then("Pin.Tag static getter is defined", () => {
+        expect(Pin.Tag).toBeDefined();
       });
 
-      and("Component.Tag static getter is defined", () => {
-        then("Component.Tag is Tag", () => {
-          expect(Component.Tag).toBe(Tag);
+      and("Pin.Tag static getter is defined", () => {
+        then("Pin.Tag is Tag", () => {
+          expect(Pin.Tag).toBe(Tag);
         });
       });
     });
@@ -29,19 +29,19 @@ configuration(Configuration.TAG, () => {
 });
 
 configuration(Configuration.ATTRIBUTES, () => {
-  and("Component imported", () => {
-    then("Component is defined", () => {
-      expect(Component).toBeDefined();
+  and("Pin imported", () => {
+    then("Pin is defined", () => {
+      expect(Pin).toBeDefined();
     });
 
-    and("Component is defined", () => {
-      then("Component.Attributes static getter is defined", () => {
-        expect(Component.Attributes).toBeDefined();
+    and("Pin is defined", () => {
+      then("Pin.Attributes static getter is defined", () => {
+        expect(Pin.Attributes).toBeDefined();
       });
 
-      and("Component.Attributes static getter is defined", () => {
-        then("Component.Attributes is Attributes", () => {
-          expect(Component.Attributes).toBe(Attributes);
+      and("Pin.Attributes static getter is defined", () => {
+        then("Pin.Attributes is Attributes", () => {
+          expect(Pin.Attributes).toBe(Attributes);
         });
       });
     });
@@ -50,50 +50,50 @@ configuration(Configuration.ATTRIBUTES, () => {
 
 // Utilities
 utility(Utilities.TEMPLATE, () => {
-  then("Component.Template static property is defined", () => {
-    expect(Component.Template).toBeDefined();
+  then("Pin.Template static property is defined", () => {
+    expect(Pin.Template).toBeDefined();
   });
 
-  and("Component.Template static property is defined", () => {
-    then("Component.Template is a Template", () => {
-      expect(Component.Template).toBeInstanceOf(Template);
+  and("Pin.Template static property is defined", () => {
+    then("Pin.Template is a Template", () => {
+      expect(Pin.Template).toBeInstanceOf(Template);
     });
   });
 });
 
 // Compositions
 composition(Composition.TEMPLATE, () => {
-  given("Component is defined in custom element registry", () => {
+  given("Pin is defined in custom element registry", () => {
     beforeEach(() => {
-      define(Component.Tag, Component);
+      define(Pin.Tag, Pin);
     });
 
     and("HTML Template is added to DOM", () => {
       let template: HTMLTemplateElement;
       beforeEach(async () => {
-        template = (await Component.Template.load(
+        template = (await Pin.Template.load(
           "pin.template.html"
         )) as HTMLTemplateElement;
       });
       afterEach(() => {
-        remove(Component.Tag);
+        remove(Pin.Tag);
       });
 
       then("template is defined", () => {
         expect(template).toBeDefined();
       });
 
-      and("a new component is added to DOM", () => {
-        let component: Component;
+      and("a new pin is added to DOM", () => {
+        let pin: Pin;
         beforeEach(() => {
-          component = add<Component>(Component.Tag);
+          pin = add<Pin>(Pin.Tag);
         });
         afterEach(() => {
-          component.remove();
+          pin.remove();
         });
 
-        then("component.root contents contains template contents", () => {
-          expect(component.root.innerHTML).toContain(template.innerHTML);
+        then("pin.root contents contains template contents", () => {
+          expect(pin.root.innerHTML).toContain(template.innerHTML);
         });
       });
     });
@@ -101,34 +101,34 @@ composition(Composition.TEMPLATE, () => {
 });
 
 composition(Composition.CSS, () => {
-  given("Component is defined in custom element registry", () => {
+  given("Pin is defined in custom element registry", () => {
     beforeEach(() => {
-      define(Component.Tag, Component);
+      define(Pin.Tag, Pin);
     });
     and("HTML Template is added to DOM", () => {
       beforeEach(async () => {
-        await Component.Template.load("pin.template.html");
+        await Pin.Template.load("pin.template.html");
       });
       afterEach(() => {
-        remove(Component.Tag);
+        remove(Pin.Tag);
       });
 
-      and("a new component is added to DOM", () => {
-        let component: Component;
+      and("a new pin is added to DOM", () => {
+        let pin: Pin;
         beforeEach(() => {
-          component = add<Component>(Component.Tag);
+          pin = add<Pin>(Pin.Tag);
         });
         afterEach(() => {
-          component.remove();
+          pin.remove();
         });
 
-        then("component.root contents contains a link to stylesheet", () => {
-          expect(component.root.innerHTML).toContain("stylesheet");
+        then("pin.root contents contains a link to stylesheet", () => {
+          expect(pin.root.innerHTML).toContain("stylesheet");
         });
 
-        and("component.root contents contains a link to stylesheet", () => {
+        and("pin.root contents contains a link to stylesheet", () => {
           then("the stylesheet file's name is correct", () => {
-            expect(component.root.innerHTML).toContain(CSS);
+            expect(pin.root.innerHTML).toContain(CSS);
           });
         });
       });

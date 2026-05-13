@@ -1,5 +1,5 @@
-import { component } from "@tungthac/pin-button";
+import { Pin } from "@tungthac/pin-button";
 
-await component.Template.load("pin.template.html");
+await Pin.Template.load("pin.template.html");
 
-customElements.define(component.Tag, component);
+customElements.define(Pin.Tag, Pin);

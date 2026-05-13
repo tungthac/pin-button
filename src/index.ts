@@ -8,4 +8,4 @@ export {
   Gesture
 } from "./pin.meta.js";
 
-export { component } from "./pin.js";
+export { Pin } from "./pin.js";

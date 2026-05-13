@@ -1,5 +1,5 @@
 /**
- * @module Component
+ * @module Pin
  */
 
 // Base Component
@@ -26,7 +26,7 @@ export const configuration: Configuration = {
 /**
  * @category Component
  */
-export class component extends Component {
+export class Pin extends Component {
   /**
    * The tag name of the component
    * @category Configuration

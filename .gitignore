@@ -11,3 +11,6 @@ src/**/*.js
 src/**/*.map
 test/unit/**/*.js
 test/unit/**/*.map
+
+# Session-local progress notes (not part of deliverable)
+PROGRESS.md

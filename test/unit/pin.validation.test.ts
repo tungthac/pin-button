@@ -1,4 +1,4 @@
-import { State, Visibility, Validate } from "@tungthac/pin-button";
+import { State, Visibility, Status, Validate } from "@tungthac/pin-button";
 
 // Visibility
 validation(State.VISIBILITY, () => {
@@ -97,6 +97,21 @@ validation(State.VISIBILITY, () => {
             );
           });
         });
+      });
+    });
+  });
+});
+
+// Status
+validation(State.STATUS, () => {
+  given("Validate imported", () => {
+    then("Validate is defined", () => {
+      expect(Validate).toBeDefined();
+    });
+
+    and("Validate is defined", () => {
+      then("`Validate.status` static method is defined", () => {
+        expect(Validate.status).toBeDefined();
       });
     });
   });
